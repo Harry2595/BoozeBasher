@@ -11,6 +11,14 @@ public class BoomScript : MonoBehaviour
     public GameObject particleHolder;
     public GameObject GFX;
 
+    //Refs
+    BoomLaunch BLRef;
+
+    void Start()
+    {
+        BLRef = BoomLaunch.instance.GetComponent<BoomLaunch>();
+    }
+
     void OnCollisionEnter(Collision other)
     {
         if (other.gameObject != other.gameObject.CompareTag("Player")) {
@@ -27,9 +35,9 @@ public class BoomScript : MonoBehaviour
                 }
                 else if(obj == obj.CompareTag("Enemy"))
                 {
+                    KnifeHitDetect Knifer = obj.GetComponent<KnifeHitDetect>();
+                    Knifer.TakeDamage(boomDamage);
                     rb.AddExplosionForce(explosionForce * 150, transform.position, explosionRadius);
-                    BanditHitDetect Bandit = obj.GetComponent<BanditHitDetect>();
-                    Bandit.TakeDamage(boomDamage);
                 }
                 else
                 {
@@ -46,6 +54,7 @@ public class BoomScript : MonoBehaviour
             GFX.SetActive(false);
 
             Destroy(gameObject, 0.5f);
+            BLRef.AssignRB();
         }
     }
 

@@ -82,7 +82,7 @@ public class LeverActionScript : MonoBehaviour
             {
                 Debug.Log(hit.transform.name);
 
-                BanditHitDetect Bandit = hit.transform.GetComponent<BanditHitDetect>(); //Checking if the object we hit has a specific script
+                KnifeHitDetect Bandit = hit.transform.GetComponent<KnifeHitDetect>(); //Checking if the object we hit has a specific script
                 if (Bandit != null)
                 {
                     ParticleSystem tempBlood = Instantiate(bloodSplat, hit.point, Quaternion.identity);

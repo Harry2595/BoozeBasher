@@ -85,13 +85,12 @@ public class Pistol : MonoBehaviour
             {
                 Debug.Log(hit.transform.name);
 
-                BanditHitDetect Bandit = hit.transform.GetComponent<BanditHitDetect>(); //Checking if the object we hit has a specific script
+                KnifeHitDetect Bandit = hit.transform.GetComponent<KnifeHitDetect>(); //Checking if the object we hit has a specific script
                 if (Bandit != null)
                 {
                     ParticleSystem tempBlood = Instantiate(bloodSplat, hit.point, Quaternion.identity);
                     tempBlood.Play();
                     Bandit.TakeDamage(damage);
-                    Destroy(tempBlood, 1); //it wont get rid of clone...
                 }
             }
         }

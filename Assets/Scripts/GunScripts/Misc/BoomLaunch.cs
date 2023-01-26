@@ -18,9 +18,19 @@ public class BoomLaunch : MonoBehaviour
     //Refs
     public WeponManager WM;
 
+    //TempRigidbody
+    public GameObject tempRB;
+
+    public static BoomLaunch instance;
+
+    void Awake()
+    {
+        instance = this;
+    }
+
     void FixedUpdate()
     {
-        if (Input.GetKeyDown("f") && WM.boomNums >= 1 && WM.boomOut)
+        if (Input.GetButtonDown("Fire1") && WM.boomNums >= 1 && WM.boomOut)
         {
             GameObject bombClone = Instantiate(bomb, bombSpawn.transform.position, Quaternion.identity);
             rb = bombClone.GetComponent<Rigidbody>();
@@ -36,4 +46,10 @@ public class BoomLaunch : MonoBehaviour
         rotationSpeed = rb.angularVelocity.magnitude * Mathf.Rad2Deg;
         rb.angularVelocity = new Vector3(Mathf.PI * 2, 0, 0);
     }
+
+    public void AssignRB()
+    {
+        rb = tempRB.GetComponent<Rigidbody>();
+    }
 }
+

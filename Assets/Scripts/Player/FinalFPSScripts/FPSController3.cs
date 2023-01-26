@@ -8,8 +8,6 @@ public class FPSController3 : MonoBehaviour
     public float moveSpeed = 8;
     public float SprintMultiplier = 2;
     public float GroundDrag = 6;
-    //public float WallRunDrag;
-    //public float wallFallOffSpeed;
 
     public float JumpForce;
     public float jumpCooldown;

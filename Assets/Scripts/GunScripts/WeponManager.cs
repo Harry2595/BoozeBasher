@@ -80,6 +80,7 @@ public class WeponManager : MonoBehaviour
                 pistolGFX.SetActive(false);
                 macheteOut = false;
                 boomOut = false;
+                boomGFX.SetActive(false);
                 leverActionOut = false;
                 leverActionGFX.SetActive(false);
             }
@@ -151,7 +152,6 @@ public class WeponManager : MonoBehaviour
             hasLeverAction = false;
             leverActionOut = false;
             leverActionGFX.SetActive(false);
-            Debug.Log("Spawn");
             Instantiate(leverActionInteractable, dropLocation.transform.position, Quaternion.identity);
         }
 
