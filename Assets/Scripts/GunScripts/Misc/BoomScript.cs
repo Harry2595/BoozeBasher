@@ -29,14 +29,20 @@ public class BoomScript : MonoBehaviour
                 var rb = obj.GetComponent<Rigidbody>();
                 if (rb == null) continue;
 
-                if(obj != obj.CompareTag("Player") && obj != obj.CompareTag("Enemy"))
+                if(obj != obj.CompareTag("Player") && obj != obj.CompareTag("Knifer") && obj != obj.CompareTag("PistolGuy"))
                 {
                     rb.AddExplosionForce(explosionForce * 150, transform.position, explosionRadius);
                 }
-                else if(obj == obj.CompareTag("Enemy"))
+                else if(obj == obj.CompareTag("Knifer"))
                 {
                     KnifeHitDetect Knifer = obj.GetComponent<KnifeHitDetect>();
                     Knifer.TakeDamage(boomDamage);
+                    rb.AddExplosionForce(explosionForce * 150, transform.position, explosionRadius);
+                }
+                else if (obj == obj.CompareTag("PistolGuy"))
+                {
+                    PistolGuyHitDetect PistolGuy = obj.GetComponent<PistolGuyHitDetect>();
+                    PistolGuy.TakeDamage(boomDamage);
                     rb.AddExplosionForce(explosionForce * 150, transform.position, explosionRadius);
                 }
                 else

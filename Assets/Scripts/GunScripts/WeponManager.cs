@@ -210,6 +210,10 @@ public class WeponManager : MonoBehaviour
     public void BoomPickup()
     {
         boomNums++;
+        if (boomOut)
+        {
+            boomGFX.SetActive(true);
+        }
     }
 
 

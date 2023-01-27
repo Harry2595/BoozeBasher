@@ -83,14 +83,28 @@ public class Knife : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
             {
-                Debug.Log(hit.transform.name);
-
-                KnifeHitDetect Bandit = hit.transform.GetComponent<KnifeHitDetect>(); //Checking if the object we hit has a specific script
-                if (Bandit != null)
+                if (hit.transform.tag == "PistolGuy")
                 {
-                    ParticleSystem tempBlood = Instantiate(bloodSplat, hit.point, Quaternion.identity);
-                    tempBlood.Play();
-                    Bandit.TakeDamage(damage);
+                    PistolGuyHitDetect PistolGuy = hit.transform.GetComponent<PistolGuyHitDetect>();
+
+                    if (PistolGuy != null)
+                    {
+                        ParticleSystem tempBlood = Instantiate(bloodSplat, hit.point, Quaternion.identity);
+                        tempBlood.Play();
+                        PistolGuy.TakeDamage(damage);
+                    }
+                }
+
+                if (hit.transform.tag == "Knifer")
+                {
+                    KnifeHitDetect Knifer = hit.transform.GetComponent<KnifeHitDetect>();
+
+                    if (Knifer != null)
+                    {
+                        ParticleSystem tempBlood = Instantiate(bloodSplat, hit.point, Quaternion.identity);
+                        tempBlood.Play();
+                        Knifer.TakeDamage(damage);
+                    }
                 }
             }
         }

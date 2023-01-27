@@ -11,6 +11,8 @@ TagManager:
   - Pistol
   - LeverAction
   - Knife
+  - PistolGuy
+  - Knifer
   layers:
   - Default
   - TransparentFX
