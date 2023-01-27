@@ -45,6 +45,12 @@ public class BoomScript : MonoBehaviour
                     PistolGuy.TakeDamage(boomDamage);
                     rb.AddExplosionForce(explosionForce * 150, transform.position, explosionRadius);
                 }
+                else if (obj == obj.CompareTag("RepeaterGuy"))
+                {
+                    RepeaterGuyHitDetect RepeaterGuy = obj.GetComponent<RepeaterGuyHitDetect>();
+                    RepeaterGuy.TakeDamage(boomDamage);                                                 //not working for some reason
+                    rb.AddExplosionForce(explosionForce * 150, transform.position, explosionRadius); 
+                }
                 else
                 {
                     rb.AddExplosionForce(explosionForce * 15, transform.position, explosionRadius);

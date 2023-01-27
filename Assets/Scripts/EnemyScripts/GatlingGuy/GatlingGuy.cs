@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PistolGuy : MonoBehaviour
+public class GatlingGuy : MonoBehaviour
 {
     //Stats
     [Range(0, 100)] public float speed;
@@ -38,7 +38,7 @@ public class PistolGuy : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
 
         time = 1;
-        timeDelay = Random.Range(0.5f, 4f); 
+        timeDelay = Random.Range(1f, 6f);
 
         if (agent != null)
         {
@@ -67,7 +67,7 @@ public class PistolGuy : MonoBehaviour
                     FaceTarget();
                 }
 
-                if(distance <= shootRadius && distance >= stopShootRadius)
+                if (distance <= shootRadius && distance >= stopShootRadius)
                 {
                     //Shoot player
                 }
@@ -102,17 +102,17 @@ public class PistolGuy : MonoBehaviour
             time = time + 1f * Time.deltaTime;
         }
 
-        if(time >= timeDelay)
+        if (time >= timeDelay)
         {
-            timeDelay = Random.Range(0.5f, 4f); 
+            timeDelay = Random.Range(1f, 6f);
             time = 0;
         }
 
-        if(time <= timeDelay / 2 && startDelay)
+        if (time <= timeDelay / 2 && startDelay)
         {
             rb.AddForce(-transform.right * dodgeSpeed * Time.deltaTime);
         }
-        else if(time >= timeDelay / 2 && startDelay)
+        else if (time >= timeDelay / 2 && startDelay)
         {
             rb.AddForce(transform.right * dodgeSpeed * Time.deltaTime);
         }

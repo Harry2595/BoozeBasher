@@ -92,6 +92,18 @@ public class LeverActionScript : MonoBehaviour
                     }
                 }
 
+                if (hit.transform.tag == "RepeaterGuy")
+                {
+                    RepeaterGuyHitDetect RepeaterGuy = hit.transform.GetComponent<RepeaterGuyHitDetect>();
+
+                    if (RepeaterGuy != null)
+                    {
+                        ParticleSystem tempBlood = Instantiate(bloodSplat, hit.point, Quaternion.identity);
+                        tempBlood.Play();
+                        RepeaterGuy.TakeDamage(damage);
+                    }
+                }
+
                 if (hit.transform.tag == "Knifer")
                 {
                     KnifeHitDetect Knifer = hit.transform.GetComponent<KnifeHitDetect>();

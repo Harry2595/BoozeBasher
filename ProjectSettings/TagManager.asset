@@ -13,6 +13,7 @@ TagManager:
   - Knife
   - PistolGuy
   - Knifer
+  - RepeaterGuy
   layers:
   - Default
   - TransparentFX
