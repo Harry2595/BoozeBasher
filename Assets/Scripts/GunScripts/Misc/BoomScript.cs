@@ -48,7 +48,7 @@ public class BoomScript : MonoBehaviour
                 else if (obj == obj.CompareTag("RepeaterGuy"))
                 {
                     RepeaterGuyHitDetect RepeaterGuy = obj.GetComponent<RepeaterGuyHitDetect>();
-                    RepeaterGuy.TakeDamage(boomDamage);                                                 //not working for some reason
+                    RepeaterGuy.TakeDamage(boomDamage);                                                
                     rb.AddExplosionForce(explosionForce * 150, transform.position, explosionRadius); 
                 }
                 else
