@@ -36,5 +36,9 @@ public class EnemyProjectileController : MonoBehaviour
             other.gameObject.GetComponent<PlayerHealthSystem>().TakeDamage(damageAmount);
             Destroy(gameObject);
         }
+        else
+        {
+            Destroy(gameObject); //I added this so it would not fire through walls
+        }
     }
 }

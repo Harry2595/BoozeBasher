@@ -23,4 +23,9 @@ public class EnemyHealthSystem : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void AssignHealth(int HPGain)
+    {
+        currentHealth += HPGain;
+    }
 }

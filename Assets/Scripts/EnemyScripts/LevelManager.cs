@@ -11,6 +11,9 @@ public class LevelManager : MonoBehaviour
     public bool roundInProgress = false;
     bool destroyEnemies = false;
 
+    public int healthGain;
+    public int damageGain;
+
     //refs
     public EnemyManager EMRef;
 
@@ -61,6 +64,9 @@ public class LevelManager : MonoBehaviour
         pointGain += 2;
         EMRef.canSpawnEnemies = true;
         EMRef.GivePoints();
+
+        healthGain += 2;
+        damageGain += 2;
     }
 
     void EndRound()
@@ -79,6 +85,8 @@ public class LevelManager : MonoBehaviour
         canStartRound = true;
         EMRef.ResetRound();
         pointGain -= 2;
+        healthGain -= 2;
+        damageGain -= 2;
         round--;
     }
 }

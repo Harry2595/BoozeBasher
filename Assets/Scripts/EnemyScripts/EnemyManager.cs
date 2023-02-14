@@ -7,8 +7,6 @@ public class EnemyManager : MonoBehaviour
     //Vars
     float enemyHealth; 
     float enemyDamage; 
-    float healthMultiplier = 1.1f; 
-    float damageMultiplier = 1.05f; 
     float maxPointsPerRound; 
     float maxEnemiesSpawnedAtOnce = 20f; 
     public float enemiesSpawned; 
@@ -52,6 +50,12 @@ public class EnemyManager : MonoBehaviour
     //Spawns
     public Transform spawn1;
     public Transform spawn2;
+
+    GameObject KniferCopy;
+    GameObject PistolCopy;
+    GameObject RepeaterCopy;
+    GameObject ShotgunCopy;
+    GameObject GatCopy;
 
     //Rands
     int ID;
@@ -164,13 +168,15 @@ public class EnemyManager : MonoBehaviour
                     case 1:
                         if(spawnID == 1)
                         {
-                            Instantiate(knifer, spawn1.transform.position, Quaternion.identity);
+                            KniferCopy = Instantiate(knifer, spawn1.transform.position, Quaternion.identity);
+                            KniferCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - kniferPrice;
                             enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(knifer, spawn2.transform.position, Quaternion.identity);
+                            KniferCopy = Instantiate(knifer, spawn2.transform.position, Quaternion.identity);
+                            KniferCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - kniferPrice;
                             enemiesSpawned++;
                         }
@@ -180,13 +186,15 @@ public class EnemyManager : MonoBehaviour
                     case 2:
                         if (spawnID == 1)
                         {
-                            Instantiate(pistolGuy, spawn1.transform.position, Quaternion.identity);
+                            PistolCopy = Instantiate(pistolGuy, spawn1.transform.position, Quaternion.identity);
+                            PistolCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - pistolPrice;
                             enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(pistolGuy, spawn2.transform.position, Quaternion.identity);
+                            PistolCopy = Instantiate(pistolGuy, spawn2.transform.position, Quaternion.identity);
+                            PistolCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - pistolPrice;
                             enemiesSpawned++;
                         }
@@ -196,13 +204,15 @@ public class EnemyManager : MonoBehaviour
                     case 3:
                         if (spawnID == 1)
                         {
-                            Instantiate(repeaterGuy, spawn1.transform.position, Quaternion.identity);
+                            RepeaterCopy = Instantiate(repeaterGuy, spawn1.transform.position, Quaternion.identity);
+                            RepeaterCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - repeaterPrice;
                             enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(repeaterGuy, spawn2.transform.position, Quaternion.identity);
+                            RepeaterCopy = Instantiate(repeaterGuy, spawn2.transform.position, Quaternion.identity);
+                            RepeaterCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - repeaterPrice;
                             enemiesSpawned++;
                         }
@@ -212,13 +222,15 @@ public class EnemyManager : MonoBehaviour
                     case 4:
                         if (spawnID == 1)
                         {
-                            Instantiate(shotgunGuy, spawn1.transform.position, Quaternion.identity);
+                            ShotgunCopy = Instantiate(shotgunGuy, spawn1.transform.position, Quaternion.identity);
+                            ShotgunCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - shotgunPrice;
                             enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(shotgunGuy, spawn2.transform.position, Quaternion.identity);
+                            ShotgunCopy = Instantiate(shotgunGuy, spawn2.transform.position, Quaternion.identity);
+                            ShotgunCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - shotgunPrice;
                             enemiesSpawned++;
                         }
@@ -228,13 +240,15 @@ public class EnemyManager : MonoBehaviour
                     case 5:
                         if (spawnID == 1)
                         {
-                            Instantiate(gatGuy, spawn1.transform.position, Quaternion.identity);
+                            GatCopy = Instantiate(gatGuy, spawn1.transform.position, Quaternion.identity);
+                            GatCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - gatlingPrice;
                             enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(gatGuy, spawn2.transform.position, Quaternion.identity);
+                            GatCopy = Instantiate(gatGuy, spawn2.transform.position, Quaternion.identity);
+                            GatCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - gatlingPrice;
                             enemiesSpawned++;
                         }
@@ -242,7 +256,7 @@ public class EnemyManager : MonoBehaviour
                         break;
                 }
             }
-            else if(canSpawnKnifer && canSpawnPistol && canSpawnRepeater && canSpawnShotgun && canSpawnGat)
+            else if(canSpawnKnifer && canSpawnPistol && canSpawnRepeater && canSpawnShotgun)
             {
                 ID = Random.Range(1, 5);
                 spawnID = Random.Range(1, 3);
@@ -252,13 +266,15 @@ public class EnemyManager : MonoBehaviour
                     case 1:
                         if (spawnID == 1)
                         {
-                            Instantiate(knifer, spawn1.transform.position, Quaternion.identity);
+                            KniferCopy = Instantiate(knifer, spawn1.transform.position, Quaternion.identity);
+                            KniferCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - kniferPrice;
                             enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(knifer, spawn2.transform.position, Quaternion.identity);
+                            KniferCopy = Instantiate(knifer, spawn2.transform.position, Quaternion.identity);
+                            KniferCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - kniferPrice;
                             enemiesSpawned++;
                         }
@@ -268,13 +284,15 @@ public class EnemyManager : MonoBehaviour
                     case 2:
                         if (spawnID == 1)
                         {
-                            Instantiate(pistolGuy, spawn1.transform.position, Quaternion.identity);
+                            PistolCopy = Instantiate(pistolGuy, spawn1.transform.position, Quaternion.identity);
+                            PistolCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - pistolPrice;
                             enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(pistolGuy, spawn2.transform.position, Quaternion.identity);
+                            PistolCopy = Instantiate(pistolGuy, spawn2.transform.position, Quaternion.identity);
+                            PistolCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - pistolPrice;
                             enemiesSpawned++;
                         }
@@ -284,13 +302,15 @@ public class EnemyManager : MonoBehaviour
                     case 3:
                         if (spawnID == 1)
                         {
-                            Instantiate(repeaterGuy, spawn1.transform.position, Quaternion.identity);
+                            RepeaterCopy = Instantiate(repeaterGuy, spawn1.transform.position, Quaternion.identity);
+                            RepeaterCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - repeaterPrice;
                             enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(repeaterGuy, spawn2.transform.position, Quaternion.identity);
+                            RepeaterCopy = Instantiate(repeaterGuy, spawn2.transform.position, Quaternion.identity);
+                            RepeaterCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - repeaterPrice;
                             enemiesSpawned++;
                         }
@@ -300,13 +320,15 @@ public class EnemyManager : MonoBehaviour
                     case 4:
                         if (spawnID == 1)
                         {
-                            Instantiate(shotgunGuy, spawn1.transform.position, Quaternion.identity);
+                            ShotgunCopy = Instantiate(shotgunGuy, spawn1.transform.position, Quaternion.identity);
+                            ShotgunCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - shotgunPrice;
                             enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(shotgunGuy, spawn2.transform.position, Quaternion.identity);
+                            ShotgunCopy = Instantiate(shotgunGuy, spawn2.transform.position, Quaternion.identity);
+                            ShotgunCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - shotgunPrice;
                             enemiesSpawned++;
                         }
@@ -324,13 +346,15 @@ public class EnemyManager : MonoBehaviour
                     case 1:
                         if (spawnID == 1)
                         {
-                            Instantiate(knifer, spawn1.transform.position, Quaternion.identity);
+                            KniferCopy = Instantiate(knifer, spawn1.transform.position, Quaternion.identity);
+                            KniferCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - kniferPrice;
                             enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(knifer, spawn2.transform.position, Quaternion.identity);
+                            KniferCopy = Instantiate(knifer, spawn2.transform.position, Quaternion.identity);
+                            KniferCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - kniferPrice;
                             enemiesSpawned++;
                         }
@@ -340,13 +364,15 @@ public class EnemyManager : MonoBehaviour
                     case 2:
                         if (spawnID == 1)
                         {
-                            Instantiate(pistolGuy, spawn1.transform.position, Quaternion.identity);
+                            PistolCopy = Instantiate(pistolGuy, spawn1.transform.position, Quaternion.identity);
+                            PistolCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - pistolPrice;
                             enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(pistolGuy, spawn2.transform.position, Quaternion.identity);
+                            PistolCopy = Instantiate(pistolGuy, spawn2.transform.position, Quaternion.identity);
+                            PistolCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - pistolPrice;
                             enemiesSpawned++;
                         }
@@ -356,13 +382,15 @@ public class EnemyManager : MonoBehaviour
                     case 3:
                         if (spawnID == 1)
                         {
-                            Instantiate(repeaterGuy, spawn1.transform.position, Quaternion.identity);
+                            RepeaterCopy = Instantiate(repeaterGuy, spawn1.transform.position, Quaternion.identity);
+                            RepeaterCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - repeaterPrice;
                             enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(repeaterGuy, spawn2.transform.position, Quaternion.identity);
+                            RepeaterCopy = Instantiate(repeaterGuy, spawn2.transform.position, Quaternion.identity);
+                            RepeaterCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - repeaterPrice;
                             enemiesSpawned++;
                         }
@@ -380,13 +408,15 @@ public class EnemyManager : MonoBehaviour
                     case 1:
                         if (spawnID == 1)
                         {
-                            Instantiate(knifer, spawn1.transform.position, Quaternion.identity);
+                            KniferCopy = Instantiate(knifer, spawn1.transform.position, Quaternion.identity);
+                            KniferCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - kniferPrice;
                             enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(knifer, spawn2.transform.position, Quaternion.identity);
+                            KniferCopy = Instantiate(knifer, spawn2.transform.position, Quaternion.identity);
+                            KniferCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - kniferPrice;
                             enemiesSpawned++;
                         }
@@ -396,13 +426,15 @@ public class EnemyManager : MonoBehaviour
                     case 2:
                         if (spawnID == 1)
                         {
-                            Instantiate(pistolGuy, spawn1.transform.position, Quaternion.identity);
+                            PistolCopy = Instantiate(pistolGuy, spawn1.transform.position, Quaternion.identity);
+                            PistolCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - pistolPrice;
                             enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(pistolGuy, spawn2.transform.position, Quaternion.identity);
+                            PistolCopy = Instantiate(pistolGuy, spawn2.transform.position, Quaternion.identity);
+                            PistolCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                             currentPoints = currentPoints - pistolPrice;
                             enemiesSpawned++;
                         }
@@ -414,7 +446,8 @@ public class EnemyManager : MonoBehaviour
             {
                 spawnID = Random.Range(1, 3);
 
-                Instantiate(knifer, spawn1.transform.position, Quaternion.identity);
+                KniferCopy = Instantiate(knifer, spawn1.transform.position, Quaternion.identity);
+                KniferCopy.GetComponent<EnemyHealthSystem>().AssignHealth(LMRef.healthGain);
                 currentPoints = currentPoints - kniferPrice;
                 enemiesSpawned++;
             }
