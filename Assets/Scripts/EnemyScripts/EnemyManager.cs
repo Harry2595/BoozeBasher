@@ -5,36 +5,42 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     //Vars
-    float EH; //enemyHealth
-    float ED; //enemyDamage
-    float HM = 1.1f; //healthMultiplier
-    float DM = 1.05f; //damageMultiplier
-    float MPPR; //maxPointsPerRound
-    float MES = 20f; //maxEnemiesSpawnedAtOnce
-    public float ES; //enemiesSpawned
-    float PG = 1.5f; //pointGain
-    float P = 1f; //point
-    float R; //round
-    public float CP; //currentPoints
+    float enemyHealth; 
+    float enemyDamage; 
+    float healthMultiplier = 1.1f; 
+    float damageMultiplier = 1.05f; 
+    float maxPointsPerRound; 
+    float maxEnemiesSpawnedAtOnce = 20f; 
+    public float enemiesSpawned; 
+    public float point;
+    float startingPoints;
+
+    //float round; 
+    public int currentPoints; 
 
     //Prices
-    float KP = 2; //knifer price
-    float PP = 4; //knifer price
-    float RP = 6; //knifer price
-    float SP = 8; //knifer price
-    float GP = 10; //knifer price
+    int kniferPrice = 2; 
+    int pistolPrice = 4; 
+    int repeaterPrice = 6; 
+    int shotgunPrice = 8; 
+    int gatlingPrice = 10;
 
     //Refs
+    public LevelManager LMRef;
 
     //Bools
-    bool CSK = false; //canSpawnKnifer
-    bool CSP = false; //canSpawnPistolGuy
-    bool CSR = false; //canSpawnRepeaterGuy
-    bool CSS = false; //canSpawnShotgunGuy
-    bool CSG = false; //canSpawnGatGuy
+    public bool canSpawnEnemies = false;
 
-    bool NMP = false; //noMorePoints;
+    bool canSpawnKnifer = false; 
+    bool canSpawnPistol = false; 
+    bool canSpawnRepeater = false; 
+    bool canSpawnShotgun = false; 
+    bool canSpawnGat = false;
+
+    public bool noMorePoints = false;
     bool startTimer = false;
+
+    public bool canLeave = false;
 
     //PreFabs
     public GameObject knifer;
@@ -44,12 +50,12 @@ public class EnemyManager : MonoBehaviour
     public GameObject gatGuy;
 
     //Spawns
-    public Transform S1; //Spawn1
-    public Transform S2; //Spawn2
+    public Transform spawn1;
+    public Transform spawn2;
 
     //Rands
     int ID;
-    int SID; //SpawnID
+    int spawnID;
 
     //Time
     float time;
@@ -63,30 +69,30 @@ public class EnemyManager : MonoBehaviour
 
         startTimer = true;
 
-        ES = 0;
-        CP = 1000;
+        enemiesSpawned = 0;
     }
 
     void Update()
     {
         //Debug.Log(ID);
 
-        if (ES < MES && NMP != true && time >= spawnDelay)
+        if (enemiesSpawned < maxEnemiesSpawnedAtOnce && noMorePoints != true && time >= spawnDelay && canSpawnEnemies)
         {
             SpawnEnemy();
             time = 0;
             startTimer = true;
         }
 
-        if (CP <= 1 && ES <= 0)
+        if (currentPoints <= 1 && enemiesSpawned <= 0)
         {
-            Debug.Log("No More Points");
-            NMP = true;
+            canSpawnEnemies = false;
+            noMorePoints = true;
         }
 
-        if(ES <= 0)
+        if(enemiesSpawned <= 0 && LMRef.roundInProgress && currentPoints <= 1)
         {
-            //Player can leave and when they come back in, round num will increase
+            canLeave = true;
+            LMRef.canExitRound = false;
         }
 
         if (startTimer)
@@ -98,328 +104,342 @@ public class EnemyManager : MonoBehaviour
     void SpawnEnemy()
     {
         
-        if (ES <= MES - 1)
+        if (enemiesSpawned <= maxEnemiesSpawnedAtOnce - 1)
         {
-            if(CP >= KP)
+            if(currentPoints >= kniferPrice)
             {
-                CSK = true;
+                canSpawnKnifer = true;
             }
             else
             {
-                CSK = false;
+                canSpawnKnifer = false;
             }
 
-            if (CP >= PP)
+            if (currentPoints >= pistolPrice)
             {
-                CSP = true;
+                canSpawnPistol = true;
             }
             else
             {
-                CSP = false;
+                canSpawnPistol = false;
             }
 
-            if (CP >= RP)
+            if (currentPoints >= repeaterPrice)
             {
-                CSR = true;
+                canSpawnRepeater = true;
             }
             else
             {
-                CSR = false;
+                canSpawnRepeater = false;
             }
 
-            if (CP >= SP)
+            if (currentPoints >= shotgunPrice)
             {
-                CSS = true;
+                canSpawnShotgun = true;
             }
             else
             {
-                CSS = false;
+                canSpawnShotgun = false;
             }
 
-            if (CP >= GP)
+            if (currentPoints >= gatlingPrice)
             {
-                CSG = true;
+                canSpawnGat = true;
             }
             else
             {
-                CSG = false;
+                canSpawnGat = false;
             }
         }
 
-        if(CP >= KP && ES <= MES - 1)
+        if(currentPoints >= kniferPrice && enemiesSpawned <= maxEnemiesSpawnedAtOnce - 1)
         {
-            if (CSK && CSP && CSR && CSS && CSG) 
+            if (canSpawnKnifer && canSpawnPistol && canSpawnRepeater && canSpawnShotgun && canSpawnGat) 
             {
                 ID = Random.Range(1, 6);
-                SID = Random.Range(1, 3);
+                spawnID = Random.Range(1, 3);
 
                 switch (ID)
                 {
                     case 1:
-                        if(SID == 1)
+                        if(spawnID == 1)
                         {
-                            Instantiate(knifer, S1.transform.position, Quaternion.identity);
-                            CP = CP - KP;
-                            ES++;
+                            Instantiate(knifer, spawn1.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - kniferPrice;
+                            enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(knifer, S2.transform.position, Quaternion.identity);
-                            CP = CP - KP;
-                            ES++;
+                            Instantiate(knifer, spawn2.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - kniferPrice;
+                            enemiesSpawned++;
                         }
 
                         break;
 
                     case 2:
-                        if (SID == 1)
+                        if (spawnID == 1)
                         {
-                            Instantiate(pistolGuy, S1.transform.position, Quaternion.identity);
-                            CP = CP - PP;
-                            ES++;
+                            Instantiate(pistolGuy, spawn1.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - pistolPrice;
+                            enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(pistolGuy, S2.transform.position, Quaternion.identity);
-                            CP = CP - PP;
-                            ES++;
+                            Instantiate(pistolGuy, spawn2.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - pistolPrice;
+                            enemiesSpawned++;
                         }
 
                         break;
 
                     case 3:
-                        if (SID == 1)
+                        if (spawnID == 1)
                         {
-                            Instantiate(repeaterGuy, S1.transform.position, Quaternion.identity);
-                            CP = CP - RP;
-                            ES++;
+                            Instantiate(repeaterGuy, spawn1.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - repeaterPrice;
+                            enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(repeaterGuy, S2.transform.position, Quaternion.identity);
-                            CP = CP - RP;
-                            ES++;
+                            Instantiate(repeaterGuy, spawn2.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - repeaterPrice;
+                            enemiesSpawned++;
                         }
 
                         break;
 
                     case 4:
-                        if (SID == 1)
+                        if (spawnID == 1)
                         {
-                            Instantiate(shotgunGuy, S1.transform.position, Quaternion.identity);
-                            CP = CP - SP;
-                            ES++;
+                            Instantiate(shotgunGuy, spawn1.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - shotgunPrice;
+                            enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(shotgunGuy, S2.transform.position, Quaternion.identity);
-                            CP = CP - SP;
-                            ES++;
+                            Instantiate(shotgunGuy, spawn2.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - shotgunPrice;
+                            enemiesSpawned++;
                         }
 
                         break;
 
                     case 5:
-                        if (SID == 1)
+                        if (spawnID == 1)
                         {
-                            Instantiate(gatGuy, S1.transform.position, Quaternion.identity);
-                            CP = CP - GP;
-                            ES++;
+                            Instantiate(gatGuy, spawn1.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - gatlingPrice;
+                            enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(gatGuy, S2.transform.position, Quaternion.identity);
-                            CP = CP - GP;
-                            ES++;
+                            Instantiate(gatGuy, spawn2.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - gatlingPrice;
+                            enemiesSpawned++;
                         }
 
                         break;
                 }
             }
-            else if(CSK && CSP && CSR && CSS && CSG)
+            else if(canSpawnKnifer && canSpawnPistol && canSpawnRepeater && canSpawnShotgun && canSpawnGat)
             {
                 ID = Random.Range(1, 5);
-                SID = Random.Range(1, 3);
+                spawnID = Random.Range(1, 3);
 
                 switch (ID)
                 {
                     case 1:
-                        if (SID == 1)
+                        if (spawnID == 1)
                         {
-                            Instantiate(knifer, S1.transform.position, Quaternion.identity);
-                            CP = CP - KP;
-                            ES++;
+                            Instantiate(knifer, spawn1.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - kniferPrice;
+                            enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(knifer, S2.transform.position, Quaternion.identity);
-                            CP = CP - KP;
-                            ES++;
+                            Instantiate(knifer, spawn2.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - kniferPrice;
+                            enemiesSpawned++;
                         }
 
                         break;
 
                     case 2:
-                        if (SID == 1)
+                        if (spawnID == 1)
                         {
-                            Instantiate(pistolGuy, S1.transform.position, Quaternion.identity);
-                            CP = CP - PP;
-                            ES++;
+                            Instantiate(pistolGuy, spawn1.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - pistolPrice;
+                            enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(pistolGuy, S2.transform.position, Quaternion.identity);
-                            CP = CP - PP;
-                            ES++;
+                            Instantiate(pistolGuy, spawn2.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - pistolPrice;
+                            enemiesSpawned++;
                         }
 
                         break;
 
                     case 3:
-                        if (SID == 1)
+                        if (spawnID == 1)
                         {
-                            Instantiate(repeaterGuy, S1.transform.position, Quaternion.identity);
-                            CP = CP - RP;
-                            ES++;
+                            Instantiate(repeaterGuy, spawn1.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - repeaterPrice;
+                            enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(repeaterGuy, S2.transform.position, Quaternion.identity);
-                            CP = CP - RP;
-                            ES++;
+                            Instantiate(repeaterGuy, spawn2.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - repeaterPrice;
+                            enemiesSpawned++;
                         }
 
                         break;
 
                     case 4:
-                        if (SID == 1)
+                        if (spawnID == 1)
                         {
-                            Instantiate(shotgunGuy, S1.transform.position, Quaternion.identity);
-                            CP = CP - SP;
-                            ES++;
+                            Instantiate(shotgunGuy, spawn1.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - shotgunPrice;
+                            enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(shotgunGuy, S2.transform.position, Quaternion.identity);
-                            CP = CP - SP;
-                            ES++;
+                            Instantiate(shotgunGuy, spawn2.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - shotgunPrice;
+                            enemiesSpawned++;
                         }
 
                         break;
                 }
             }
-            else if(CSK && CSP && CSR && CSS)
+            else if(canSpawnKnifer && canSpawnPistol && canSpawnRepeater && canSpawnShotgun)
             {
                 ID = Random.Range(1, 4);
-                SID = Random.Range(1, 3);
+                spawnID = Random.Range(1, 3);
 
                 switch (ID)
                 {
                     case 1:
-                        if (SID == 1)
+                        if (spawnID == 1)
                         {
-                            Instantiate(knifer, S1.transform.position, Quaternion.identity);
-                            CP = CP - KP;
-                            ES++;
+                            Instantiate(knifer, spawn1.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - kniferPrice;
+                            enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(knifer, S2.transform.position, Quaternion.identity);
-                            CP = CP - KP;
-                            ES++;
+                            Instantiate(knifer, spawn2.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - kniferPrice;
+                            enemiesSpawned++;
                         }
 
                         break;
 
                     case 2:
-                        if (SID == 1)
+                        if (spawnID == 1)
                         {
-                            Instantiate(pistolGuy, S1.transform.position, Quaternion.identity);
-                            CP = CP - PP;
-                            ES++;
+                            Instantiate(pistolGuy, spawn1.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - pistolPrice;
+                            enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(pistolGuy, S2.transform.position, Quaternion.identity);
-                            CP = CP - PP;
-                            ES++;
+                            Instantiate(pistolGuy, spawn2.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - pistolPrice;
+                            enemiesSpawned++;
                         }
 
                         break;
 
                     case 3:
-                        if (SID == 1)
+                        if (spawnID == 1)
                         {
-                            Instantiate(repeaterGuy, S1.transform.position, Quaternion.identity);
-                            CP = CP - RP;
-                            ES++;
+                            Instantiate(repeaterGuy, spawn1.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - repeaterPrice;
+                            enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(repeaterGuy, S2.transform.position, Quaternion.identity);
-                            CP = CP - RP;
-                            ES++;
+                            Instantiate(repeaterGuy, spawn2.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - repeaterPrice;
+                            enemiesSpawned++;
                         }
 
                         break;
                 }
             }
-            else if(CSK && CSP)
+            else if(canSpawnKnifer && canSpawnPistol)
             {
                 ID = Random.Range(1, 3);
-                SID = Random.Range(1, 3);
+                spawnID = Random.Range(1, 3);
 
                 switch (ID)
                 {
                     case 1:
-                        if (SID == 1)
+                        if (spawnID == 1)
                         {
-                            Instantiate(knifer, S1.transform.position, Quaternion.identity);
-                            CP = CP - KP;
-                            ES++;
+                            Instantiate(knifer, spawn1.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - kniferPrice;
+                            enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(knifer, S2.transform.position, Quaternion.identity);
-                            CP = CP - KP;
-                            ES++;
+                            Instantiate(knifer, spawn2.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - kniferPrice;
+                            enemiesSpawned++;
                         }
 
                         break;
 
                     case 2:
-                        if (SID == 1)
+                        if (spawnID == 1)
                         {
-                            Instantiate(pistolGuy, S1.transform.position, Quaternion.identity);
-                            CP = CP - PP;
-                            ES++;
+                            Instantiate(pistolGuy, spawn1.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - pistolPrice;
+                            enemiesSpawned++;
                         }
                         else
                         {
-                            Instantiate(pistolGuy, S2.transform.position, Quaternion.identity);
-                            CP = CP - PP;
-                            ES++;
+                            Instantiate(pistolGuy, spawn2.transform.position, Quaternion.identity);
+                            currentPoints = currentPoints - pistolPrice;
+                            enemiesSpawned++;
                         }
 
                         break;
                 }
             }
-            else if(CSK)
+            else if(canSpawnKnifer)
             {
-                SID = Random.Range(1, 3);
+                spawnID = Random.Range(1, 3);
 
-                Instantiate(knifer, S1.transform.position, Quaternion.identity);
-                CP = CP - KP;
-                ES++;
+                Instantiate(knifer, spawn1.transform.position, Quaternion.identity);
+                currentPoints = currentPoints - kniferPrice;
+                enemiesSpawned++;
             }
 
 
         }
     }
 
-    void StartRound()
+    public void GivePoints()
+    { 
+        currentPoints = 100 * LMRef.pointGain - 40 * LMRef.pointGain;
+        startingPoints = currentPoints;
+    }
+
+    public void ResetRound()
     {
-        //getRoundNum
-        //Communicate to enemies how much health they should have if this script needs to
+        currentPoints = 0;
+
+        canSpawnEnemies = false;
+        canSpawnKnifer = false;
+        canSpawnPistol = false;
+        canSpawnRepeater = false;
+        canSpawnShotgun = false;
+        canSpawnGat = false;
+
+        enemiesSpawned = 0;
     }
 }

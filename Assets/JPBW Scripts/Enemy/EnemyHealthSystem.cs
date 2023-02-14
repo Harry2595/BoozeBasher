@@ -5,17 +5,12 @@ using UnityEngine;
 public class EnemyHealthSystem : MonoBehaviour
 {
     public int currentHealth = 5;
+
+    EnemyManager EMRef;
     
-    // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        EMRef = FindObjectOfType<EnemyManager>();
     }
 
     public void TakeDamage(int damageAmount)
@@ -24,6 +19,7 @@ public class EnemyHealthSystem : MonoBehaviour
 
         if(currentHealth <=0)
         {
+            EMRef.enemiesSpawned--;
             Destroy(gameObject);
         }
     }
