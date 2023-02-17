@@ -24,7 +24,7 @@ public class EnemyHealthSystem : MonoBehaviour
         }
     }
 
-    public void AssignHealth(int HPGain)
+    public void AssignHealth(int HPGain)   //Called on by the enemy manager when an enemy is spawned in
     {
         currentHealth += HPGain;
     }

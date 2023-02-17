@@ -8,10 +8,15 @@ public class EnemyProjectileController : MonoBehaviour
     public float upForce, forwardForce;
 
     public int damageAmount = 3;
-    
+
+    LevelManager LMRef;  //references the levelManager
+
     // Start is called before the first frame update
     void Start()
     {
+        LMRef = FindObjectOfType<LevelManager>(); //sets LMRef = to the levelManager in the scene
+        damageAmount += LMRef.damageGain; //applies the damageGain to the damage of the projectile
+
         myRigidBody = GetComponent<Rigidbody>();
 
         GrenadeThrow();
@@ -21,12 +26,6 @@ public class EnemyProjectileController : MonoBehaviour
     {
         myRigidBody.AddForce(transform.forward * forwardForce, ForceMode.Impulse);
         myRigidBody.AddForce(transform.up * upForce, ForceMode.Impulse);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void OnTriggerEnter(Collider other)

@@ -52,7 +52,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    void StartRound()
+    void StartRound()               //starts the round and increases the round counter by 1 as well as the health and damage gain for the enemies
     {
         roundInProgress = true;
         Debug.Log("RoundStart");
@@ -69,14 +69,14 @@ public class LevelManager : MonoBehaviour
         damageGain += 2;
     }
 
-    void EndRound()
+    void EndRound()              //The player can end the round when they have killed all enemies and there are no more points for the enemy manager to use
     {
         roundInProgress = false;
         Debug.Log("RoundEnd");
         canStartRound = true;
     }
 
-    void ExitRound()
+    void ExitRound()            //the enemy can exit the round at any time which will cause the round to reset 
     {
         destroyEnemies = true;
         roundInProgress = false;

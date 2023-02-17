@@ -43,9 +43,15 @@ public class NewAIScript : MonoBehaviour
     public float maxDodgeTime;
     Rigidbody rb;
 
+    //Refs
+    LevelManager LMRef;  //references the levelManager
+
 
     void Start()
     {
+        LMRef = FindObjectOfType<LevelManager>(); //sets LMRef = to the levelManager in the scene
+        meleeDamageAmount += LMRef.damageGain; //applies the damageGain to the damage of the meleeDamageAmount
+
         //myAnimator = GetComponent<Animator>();
         player = FindObjectOfType<Player>().transform;
         myAgent = GetComponent<NavMeshAgent>();
