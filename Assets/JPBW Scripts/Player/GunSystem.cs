@@ -172,4 +172,9 @@ public class GunSystem : MonoBehaviour
     {
         myUICanvas.ammoText.SetText(bulletsAvailable + "/" + totalBullets);
     }
+
+    public void ExtraDamage(int DmgAdd)
+    {
+        damageAmount += DmgAdd;
+    }
 }

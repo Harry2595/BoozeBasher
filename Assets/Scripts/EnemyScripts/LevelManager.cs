@@ -76,7 +76,7 @@ public class LevelManager : MonoBehaviour
         canStartRound = true;
     }
 
-    void ExitRound()            //the enemy can exit the round at any time which will cause the round to reset 
+    void ExitRound()            //the player can exit the round at any time which will cause the round to reset 
     {
         destroyEnemies = true;
         roundInProgress = false;

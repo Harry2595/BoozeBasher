@@ -18,11 +18,6 @@ public class PlayerHealthSystem : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void TakeDamage(int amountOfDamage)
     {
@@ -35,5 +30,11 @@ public class PlayerHealthSystem : MonoBehaviour
             gameObject.SetActive(false);
             FindObjectOfType<GameManager>().PlayerRespawn();
         }
+    }
+
+    public void PowerUpMaxHP(int HPIncrease)
+    {
+        maxHealth += HPIncrease;
+        currentHealth = maxHealth;
     }
 }

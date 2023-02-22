@@ -17,6 +17,8 @@ TagManager:
   - Prospector
   - roundEnter
   - roundEnd/Exit
+  - MaxHPPowerUp
+  - DmgPowerUp
   layers:
   - Default
   - TransparentFX
