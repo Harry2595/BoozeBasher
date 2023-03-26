@@ -19,6 +19,8 @@ TagManager:
   - roundEnd/Exit
   - MaxHPPowerUp
   - DmgPowerUp
+  - Pillar
+  - Settings
   layers:
   - Default
   - TransparentFX

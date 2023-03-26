@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GunSystem : MonoBehaviour
 {
+    public bool canShoot; //so that the player can't shoot in the menu
 
     public Transform myCameraHead;
     private UICanvasController myUICanvas;
@@ -46,9 +47,12 @@ public class GunSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Shoot();
-        GunManager();
-        UpdateAmmoText();
+        if (canShoot) //so that the player can't shoot in the menu
+        {
+            Shoot();
+            GunManager();
+            UpdateAmmoText();
+        }
     }
 
     private void GunManager()

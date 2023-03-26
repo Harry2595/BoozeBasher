@@ -7,6 +7,10 @@ public class PlayerHealthSystem : MonoBehaviour
     public int maxHealth;
     public int currentHealth;
 
+    public GameObject Spawn;
+
+    public LevelManager LMRef; 
+
     UICanvasController healthBar;
     
     // Start is called before the first frame update
@@ -18,17 +22,22 @@ public class PlayerHealthSystem : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
     }
 
+    void Update()
+    {
+        healthBar.SetHealth(currentHealth);  // moved from take damage function to here so it also updates when the player gains health
+    }
+
 
     public void TakeDamage(int amountOfDamage)
     {
         currentHealth -= amountOfDamage;
 
-        healthBar.SetHealth(currentHealth);
-
         if(currentHealth <= 0)
         {
-            gameObject.SetActive(false);
-            FindObjectOfType<GameManager>().PlayerRespawn();
+            LMRef.ResetAllRounds();
+            gameObject.transform.position = Spawn.transform.position;
+            currentHealth = maxHealth;
+            healthBar.SetMaxHealth(maxHealth);
         }
     }
 

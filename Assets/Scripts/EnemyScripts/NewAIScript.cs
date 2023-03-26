@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class NewAIScript : MonoBehaviour
 {
-    //Animator myAnimator;  I commented out all animation code for now because I do not have an animation attached to this example AI
+    Animator myAnimator; 
     NavMeshAgent myAgent;
 
     public LayerMask whatIsGround, whatIsPlayer;
@@ -52,7 +52,7 @@ public class NewAIScript : MonoBehaviour
         LMRef = FindObjectOfType<LevelManager>(); //sets LMRef = to the levelManager in the scene
         meleeDamageAmount += LMRef.damageGain; //applies the damageGain to the damage of the meleeDamageAmount
 
-        //myAnimator = GetComponent<Animator>();
+        myAnimator = GetComponent<Animator>();
         player = FindObjectOfType<Player>().transform;
         myAgent = GetComponent<NavMeshAgent>();
 
@@ -125,7 +125,7 @@ public class NewAIScript : MonoBehaviour
 
         if (readyToAttack && !meleeAttacker)
         {
-            //myAnimator.SetTrigger("Attack");
+            myAnimator.SetTrigger("Attack");
 
             firePosition.LookAt(player);
 
@@ -137,7 +137,7 @@ public class NewAIScript : MonoBehaviour
 
         else if (readyToAttack && meleeAttacker)
         {
-            //myAnimator.SetTrigger("Attack");
+            myAnimator.SetTrigger("Attack");
         }
     }
 
@@ -148,7 +148,7 @@ public class NewAIScript : MonoBehaviour
 
         if (readyToAttack)
         {
-            //myAnimator.SetTrigger("Attack");
+            myAnimator.SetTrigger("Attack");
 
             firePosition.LookAt(player);
 

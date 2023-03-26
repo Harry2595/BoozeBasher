@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float speed = 5f, runSpeed = 10f;
+    public bool canMove = true;
     
     //adding gravity
     public Vector3 velocity;
@@ -37,7 +38,6 @@ public class Player : MonoBehaviour
     public float currentSlideTimer, maxSlideTime = 0.35f;
     public float slideSpeed = 6f;
     
-    // Start is called before the first frame update
     void Start()
     {
         bodyScale = myBody.localScale;
@@ -47,11 +47,14 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayerMovement();
-        CameraMovement();
-        Jump();
-        Crouching();
-        SlideCounter();
+        if (canMove)
+        {
+            PlayerMovement();
+            CameraMovement();
+            Jump();
+            Crouching();
+            SlideCounter();
+        }
     }
 
     private void Crouching()

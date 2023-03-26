@@ -3038,7 +3038,7 @@ MonoBehaviour:
     m_Bits: 8
   whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
   player: {fileID: 0}
   firePosition: {fileID: 0}
   destinationPoint: {x: 0, y: 0, z: 0}
